@@ -17,6 +17,7 @@ namespace AssessmentAppBackend.Controllers
         }
 
         [HttpPost]
+        [Route("AddCustomer")]
         public JsonResult AddCustomer(Customer customer)
         {
             #region Calculate age
@@ -27,6 +28,11 @@ namespace AssessmentAppBackend.Controllers
             age = currentYear - BirthYear;
             #endregion
 
+            customer.CustomerID = Guid.NewGuid();
+            customer.DateCreated= DateTime.Now;
+            customer.DateEdited= DateTime.Now;
+            customer.isDeleted = false;
+
 
             customer.age = age;
             string results = _customerRepository.AddCustomer(customer);
@@ -35,6 +41,7 @@ namespace AssessmentAppBackend.Controllers
         }
 
         [HttpGet]
+        [Route("GetCustomers")]
         public JsonResult GetCustomers()
         {
             
@@ -43,7 +50,8 @@ namespace AssessmentAppBackend.Controllers
            return new JsonResult(customers);
         }
 
-        [HttpGet("id")]
+        [HttpGet]
+        [Route("GetCustomerByID/{id}")]
         public JsonResult GetCustomerByID(int id)
         {
             var customer= _customerRepository.GetCustomerById(id);
@@ -52,6 +60,7 @@ namespace AssessmentAppBackend.Controllers
         }
 
         [HttpPost]
+        [Route("UpdateCustomer")]
         public JsonResult UpdateCustomer(Customer customer)
         {
            string results= _customerRepository.UpdateCustomer(customer);
@@ -59,7 +68,8 @@ namespace AssessmentAppBackend.Controllers
             return new JsonResult(results);
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Route("GetCustomerByID/{id}")]
         public JsonResult DeleteCustomer(int id)
         {
             string results= _customerRepository.DeleteCustomer(id);

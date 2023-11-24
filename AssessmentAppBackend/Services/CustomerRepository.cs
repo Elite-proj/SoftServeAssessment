@@ -73,11 +73,12 @@ namespace AssessmentAppBackend.Services
         {
             List<Customer> list = new List<Customer>();
 
-            list = _context.Customers.OrderBy(o=>o.FirstName).ToList();
+            list = _context.Customers.Where(c=>c.isDeleted==false).OrderBy(o=>o.FirstName).ToList();
 
             return list;
         }
 
+        
         public string UpdateCustomer(Customer customer)
         {
             _context.Customers.Update(customer);
