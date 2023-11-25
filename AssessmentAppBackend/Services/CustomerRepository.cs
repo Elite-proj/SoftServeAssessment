@@ -20,26 +20,19 @@ namespace AssessmentAppBackend.Services
             return "Created";
         }
 
-        public string DeleteCustomer(int id)
+        public string DeleteCustomer(Guid id)
         {
-           var customer= _context.Customers.Find(id);
+            var customer = _context.Customers.Find(id);
 
             if (customer != null)
             {
-                Customer customer1 = new Customer();
+                
 
-                customer1.CustomerID = customer.CustomerID;
-                customer1.FirstName = customer.FirstName;
-                customer1.LastName = customer.LastName;
-                customer1.UserName = customer.UserName;
-                customer1.EmailAddress = customer.EmailAddress;
-                customer1.DateOfBirth = customer.DateOfBirth;
-                customer1.age = customer.age;
-                customer.DateCreated= customer.DateCreated;
-                customer1.DateEdited= DateTime.Now;
-                customer1.isDeleted = true;
+                customer.CustomerID = customer.CustomerID;
+                customer.DateEdited = DateTime.Now.ToString("dd/MM/yyyy");
+                customer.isDeleted = true;
 
-                _context.Customers.Update(customer1);
+                _context.Customers.Update(customer);
                 _context.SaveChanges();
 
                 return ("Deleted");
@@ -50,10 +43,10 @@ namespace AssessmentAppBackend.Services
                 return ("failed");
             }
 
-           
+
         }
 
-        public Customer GetCustomerById(int id)
+        public Customer GetCustomerById(Guid id)
         {
             //Customer customer = new Customer();
 
